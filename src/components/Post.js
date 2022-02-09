@@ -1,45 +1,48 @@
 import React from "react";
-// import가 많아지면 너무 길어지므로 index.js에 모아주고
-// 여기에서는 한 줄로 모아 import하면 편리함
-// import Grid from "../elements/Grid";
-// import Image from "../elements/Image";
-// import Text from "../elements/Text";
+import { Grid, Image, Text, Button } from "../elements";
 
-import {Grid, Image, Text} from "../elements";
+import {history} from "../redux/configureStore";
 
-
-const Post = (props) => {
-
-    return (
-      <React.Fragment>
-        <Grid>
-          <Grid is_flex padding="16px">
-            <Grid is_flex width="auto">
-              <Image shape="circle" src={props.src} />
-              <Text bold>{props.user_info.user_name}</Text>
-            </Grid>
-            <Grid is_flex width="auto">
-              <Text>{props.insert_dt}</Text>
-            </Grid>
+ const Post = (props) => {
+  return (
+    <React.Fragment>
+      <Grid>
+        <Grid is_flex padding="16px">
+          <Grid is_flex width="auto">
+            <Image shape="circle" src={props.src} />
+            <Text bold>{props.user_info.user_name}</Text>
           </Grid>
-          <Grid padding="16px">
-            <Text>{props.contents}</Text>
-          </Grid>
-          <Grid>
-            <Image shape="rectangle" src={props.src} />
-          </Grid>
-          <Grid padding="16px">
-            <Text margin="0px" bold>댓글 {props.comment_cnt}개</Text>
+          <Grid is_flex width="auto">
+            <Text>{props.insert_dt}</Text>
+            {props.is_me && (
+              <Button width="auto" margin="4px" padding="4px" _onClick={() => {
+                history.push(`/write/${props.id}`);
+              }}>
+                수정
+              </Button>
+            )}
           </Grid>
         </Grid>
-      </React.Fragment>
-    );
-}
+        <Grid padding="16px">
+          <Text>{props.contents}</Text>
+        </Grid>
+        <Grid>
+          <Image shape="rectangle" src={props.image_url} />
+        </Grid>
+        <Grid padding="16px">
+          <Text margin="0px" bold>
+            댓글 {props.comment_cnt}개
+          </Text>
+        </Grid>
+      </Grid>
+    </React.Fragment>
+  );
+};
 
 Post.defaultProps = {
     user_info: {
-        user_name: "shinzzang",
-        user_profile: "https://mblogthumb-phinf.pstatic.net/MjAxOTEwMDlfMjk3/MDAxNTcwNTczNDQxMjI1.zar5OtCPpcYARaR7-HH9D-U2Mbr58DrQRAS_pgKP0vYg.vc9wfKhXGmwuWh54z7qd0s3jzzSVsYA9kzCSQT36FNwg.JPEG.kwoun486/IMG_8155.JPG?type=w800",
+        user_name: "윤쓰윤쓰",
+        user_profile: "https://i.pinimg.com/originals/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
     },
     image_url: "https://mblogthumb-phinf.pstatic.net/MjAxOTEwMDlfMjk3/MDAxNTcwNTczNDQxMjI1.zar5OtCPpcYARaR7-HH9D-U2Mbr58DrQRAS_pgKP0vYg.vc9wfKhXGmwuWh54z7qd0s3jzzSVsYA9kzCSQT36FNwg.JPEG.kwoun486/IMG_8155.JPG?type=w800",
     contents: "짱구는 흰둥이를 좋아해",

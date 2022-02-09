@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import React from "react";
 
 const Image = (props) => {
@@ -25,16 +25,24 @@ const Image = (props) => {
 
     return (
         <React.Fragment>
-
+            <ImageDefault {...styles}></ImageDefault>
         </React.Fragment>
     )
 }
 
 Image.defaultProps = {
-    shape: "circle",
-    src: "https://mblogthumb-phinf.pstatic.net/MjAxOTEwMDlfMjk3/MDAxNTcwNTczNDQxMjI1.zar5OtCPpcYARaR7-HH9D-U2Mbr58DrQRAS_pgKP0vYg.vc9wfKhXGmwuWh54z7qd0s3jzzSVsYA9kzCSQT36FNwg.JPEG.kwoun486/IMG_8155.JPG?type=w800",
-    size: 36,
+  shape: "circle",
+  src: "https://mblogthumb-phinf.pstatic.net/MjAxOTEwMDlfMjk3/MDAxNTcwNTczNDQxMjI1.zar5OtCPpcYARaR7-HH9D-U2Mbr58DrQRAS_pgKP0vYg.vc9wfKhXGmwuWh54z7qd0s3jzzSVsYA9kzCSQT36FNwg.JPEG.kwoun486/IMG_8155.JPG?type=w800",
+  size: 36,
 };
+
+const ImageDefault = styled.div`
+  --size: ${(props) => props.size}px;
+  width: var(--size);
+  height: var(--size);
+  background-image: url("${(props) => props.src}");
+  background-size: cover;
+`;
 
 const AspectOutter = styled.div`
     width: 100%;
@@ -51,9 +59,10 @@ const AspectInner = styled.div`
 
 const ImageCircle = styled.div`
     --size: ${(props) => props.size}px;
-    width var(--size);
+    width: var(--size);
     height: var(--size);
     border-radius: var(--size);
+
     background-image: url("${(props) => props.src}");
     background-size: cover;
     margin: 4px;

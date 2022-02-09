@@ -38,7 +38,7 @@ const CommentItem = (props) => {
 
 CommentItem.defaultProps = {
     user_profile: "",
-    user_name: "yun's",
+    user_name: "윤쓰윤쓰",
     user_id: "",
     post_id: 1,
     contents: "나만 없어,, 흰둥이,,",
