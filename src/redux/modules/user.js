@@ -7,11 +7,13 @@ import { auth } from "../../shared/firebase";
 import firebase from "firebase/app";
 
 // actions
+const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
 
 // action creators
+const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
@@ -45,7 +47,14 @@ const loginFB = (id, pwd) => {
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-
+          console.log("error : ", error);
+          if (error.code === "auth/invalid-email") {
+            alert("아이디를 이메일 형식으로 입력해주세요");
+          } else if (error.code === "auth/user-not-found") {
+            alert("존재하는 아이디가 없습니다.");
+          } else if (error.code === "auth/wrong-password") {
+            alert("비밀번호가 일치하지 않습니다.");
+          }
           console.log(errorCode, errorMessage);
         });
     });
@@ -79,14 +88,12 @@ const signupFB = (id, pwd, user_name) => {
           });
 
         // Signed in
-        // ...
       })
       .catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
 
         console.log(errorCode, errorMessage);
-        // ..
       });
   };
 };
@@ -141,6 +148,7 @@ export default handleActions(
 
 // action creator export
 const actionCreators = {
+  logIn,
   logOut,
   getUser,
   signupFB,

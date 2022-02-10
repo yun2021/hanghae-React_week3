@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Text = (props) => {
-  const { bold, color, size, children, margin } = props;
+  const { bold, color, size, children, margin, _onClick } = props;
 
   const styles = {bold: bold, color: color, size: size, margin};
   return (
-      <P {...styles}>
+      <P {...styles} onClick = {_onClick}>
           {children}
       </P>
   )
@@ -14,6 +14,7 @@ const Text = (props) => {
 
 Text.defaultProps = {
   children: null,
+  _onClick: () => {},
   bold: false,
   color: "#222831",
   size: "20px",

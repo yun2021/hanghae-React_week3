@@ -6,10 +6,12 @@ import {storage} from "../../shared/firebase";
 const UPLOADING = "UPLOADING";
 const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 const SET_PREVIEW = "SET_PREVIEW";
+const DELETE_PREVIEW = "DELETE_PREVIEW";
 
 const uploading = createAction(UPLOADING, (uploading) => ({uploading}));
 const uploadImage = createAction(UPLOAD_IMAGE, (image_url) => ({image_url}));
 const setPreview = createAction(SET_PREVIEW, (preview) => ({preview}));
+const deletePreview = createAction(DELETE_PREVIEW, () => {});
 
 const initialState = {
     image_url: '',
@@ -46,13 +48,20 @@ export default handleActions({
     }),
     [SET_PREVIEW]: (state, action) => produce(state, (draft) => {
       draft.preview = action.payload.preview;
-    })
-}, initialState);
+    }),
+    [DELETE_PREVIEW]: (state, action) =>
+      produce(state, (draft) => {
+        draft.preview = null;
+      }),
+  },
+  initialState
+);
 
 const actionCreators = {
   uploadImage,
   uploadImageFB,
   setPreview,
+  deletePreview,
 };
 
 export {actionCreators};

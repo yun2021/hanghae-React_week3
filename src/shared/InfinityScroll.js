@@ -17,7 +17,6 @@ const InfinityScroll = (props) => {
       document.body.scrollTop;
 
     if (scrollHeight - innerHeight - scrollTop < 200) {
-      // 로딩 중이면 다음 걸 부르면 안되겠죠!
       if (loading) {
         return;
       }
@@ -29,11 +28,10 @@ const InfinityScroll = (props) => {
   const handleScroll = React.useCallback(_handleScroll, [loading]);
 
   React.useEffect(() => {
-    // 로딩 중이면 return
     if (loading) {
       return;
     }
-
+    
     // 다음 게 있으면 이벤트를 붙이고, 없으면 이벤트를 삭제
     if (is_next) {
       window.addEventListener("scroll", handleScroll);

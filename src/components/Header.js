@@ -23,17 +23,20 @@ const Header = (props) => {
       <React.Fragment>
         <Grid is_flex padding="4px 16px">
           <Grid>
-            <Text margin="0px" size="24px" bold>
-            🐰 Yungram 🐰
-            </Text>
+          <Text margin="0px 5px 0px 10px" size="30px" bold
+            _onClick={() => {
+              history.push("/");
+            }}>🐰 Yungram 🐰</Text>
           </Grid>
 
           <Grid is_flex>
-            <Button text="내정보"></Button>
+            <Button margin="0px 3px" size="20px" bold
+            text="내정보"></Button>
             <Button _onClick={() => {
               history.push("/noti");
-            }} text="알림"></Button>
-            <Button
+            }} margin="0px 3px" size="20px" bold
+            text="알림"></Button>
+            <Button margin="0px 3px" size="20px" bold
               text="로그아웃"
               _onClick={() => {
                 dispatch(userActions.logoutFB());
@@ -49,19 +52,20 @@ const Header = (props) => {
     <React.Fragment>
       <Grid is_flex padding="4px 16px">
         <Grid>
-          <Text margin="0px" size="24px" bold>
-          🐰 Yungram 🐰
-          </Text>
+          <Text margin="0px 5px 0px 10px" size="20px" bold
+            _onClick={() => {
+              history.push("/");
+            }}>🐰 Yungram 🐰</Text>
         </Grid>
 
         <Grid is_flex>
-          <Button
+          <Button margin="0px 3px" size="20px" bold
             text="로그인"
             _onClick={() => {
               history.push("/login");
             }}
           ></Button>
-          <Button
+          <Button margin="0px 3px" size="20px" bold
             text="회원가입"
             _onClick={() => {
               history.push("/signup");

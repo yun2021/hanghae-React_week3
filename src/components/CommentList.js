@@ -5,12 +5,7 @@ const CommentList = () => {
   return (
     <React.Fragment>
       <Grid padding="16px">
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
+        {/* <CommentItem /> */}
       </Grid>
     </React.Fragment>
   );
@@ -38,9 +33,9 @@ const CommentItem = (props) => {
 
 CommentItem.defaultProps = {
     user_profile: "",
-    user_name: "윤쓰윤쓰",
+    user_name: "윤",
     user_id: "",
     post_id: 1,
-    contents: "나만 없어,, 흰둥이,,",
-    insert_dt: '2022-02-09 19:00:00'
+    contents: "나만 없어,, 고양이 🐱",
+    insert_dt: '2022-02-10 19:00:00'
 }

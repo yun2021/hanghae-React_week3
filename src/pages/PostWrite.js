@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Text, Button, Image, Input } from "../elements";
+import { Grid, Image, Text, Input, Button } from "../elements";
 import Upload from "../shared/Upload";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -19,11 +19,12 @@ const PostWrite = (props) => {
 
   let _post = is_edit ? post_list.find((p) => p.id === post_id) : null;
 
+  const [layout, setLayout] = React.useState(_post ? _post.layout : "bottom");
   const [contents, setContents] = React.useState(_post ? _post.contents : "");
 
   React.useEffect(() => {
     if (is_edit && !_post) {
-      console.log("포스트 정보가 없어요!");
+      console.log("post 정보가 없어요!");
       history.goBack();
 
       return;
@@ -38,21 +39,40 @@ const PostWrite = (props) => {
     setContents(e.target.value);
   };
 
+  //포스트 추가
   const addPost = () => {
-    dispatch(postActions.addPostFB(contents));
+    if (contents === "" || preview === "") {
+      window.alert(
+        "게시글 작성 중 입력되지 않은 부분이 있습니다. 확인해주세요!"
+      );
+      return;
+    }
+
+    dispatch(postActions.addPostFB(contents, layout));
+    history.replace("/");
   };
 
+  //포스트 수정
   const editPost = () => {
-    dispatch(postActions.editPostFB(post_id, {contents: contents}));
-  }
+    dispatch(postActions.editPostFB(post_id, { contents: contents, layout }));
+  };
 
+  const checked = (e) => {
+    if (e.target.checked) {
+      setLayout(e.target.value);
+      console.log(e.target.value);
+    }
+  };
+
+  //로그인 하지 않았을 경우,
   if (!is_login) {
     return (
-      <Grid margin="100px 0px" padding="16px" center>
-        <Text size="32px" bold>
-          잠깐!
+      //로그인하라는 페이지 보여주기
+      <Grid padding="16px" center>
+        <Text size="24px" bold>
+          앗! 잠깐!
         </Text>
-        <Text size="16px">로그인 후에만 글을 쓸 수 있어요!</Text>
+        <Text size="16px">로그인 후에만 글을 쓸 수있어요!</Text>
         <Button
           _onClick={() => {
             history.replace("/");
@@ -63,45 +83,104 @@ const PostWrite = (props) => {
       </Grid>
     );
   }
-
+  //로그인되어 있는경우, 게시글 작성 페이지 보여주기
   return (
     <React.Fragment>
       <Grid padding="16px">
-        <Text margin="0px" size="36px" bold>
+        <Text size="24px" bold>
           {is_edit ? "게시글 수정" : "게시글 작성"}
         </Text>
         <Upload />
       </Grid>
-
-      <Grid>
-        <Grid padding="16px">
-          <Text margin="0px" size="24px" bold>
+      <Grid padding="16px">
+        <Grid>
+          <Text margin="5px 0px" size="14px" bold>
             미리보기
           </Text>
+          {/* 오른쪽 레이아웃 */}
+          <input
+            type="radio"
+            name="layout"
+            id="right"
+            value="right"
+            onChange={checked}
+          />
+          <label htmlFor="right">
+            <strong>이미지 오른쪽 레이아웃</strong>
+          </label>
+          <Grid is_flex>
+            <Grid>
+              <Text textAlign bold>
+                이미지 오른쪽 레이아웃
+              </Text>
+            </Grid>
+            <Image
+              shape="rectangle"
+              margin="0px 0px 20px 0px"
+              src={preview ? preview : "http://via.placeholder.com/400x300"}
+            />
+          </Grid>
+
+          {/* 왼쪽 레이아웃 */}
+          <input
+            type="radio"
+            name="layout"
+            id="left"
+            value="left"
+            onChange={checked}
+          />
+          <label htmlFor="left">
+            <strong>이미지 왼쪽 레이아웃</strong>
+          </label>
+          <Grid is_flex>
+            <Image
+              shape="rectangle"
+              margin="0px 0px 20px 0px"
+              src={preview ? preview : "http://via.placeholder.com/400x300"}
+            />
+            <Grid>
+              <Text textAlign bold>
+                이미지 왼쪽 레이아웃
+              </Text>
+            </Grid>
+          </Grid>
+
+          {/* 아래쪽 레이아웃 */}
+          <input
+            type="radio"
+            name="layout"
+            id="bottom"
+            value="bottom"
+            onChange={checked}
+          />
+          <label htmlFor="bottom">
+            <strong>이미지 아래쪽 레이아웃</strong>
+          </label>
+          <Grid>
+            <Text bold>이미지 아래쪽 레이아웃</Text>
+            <Image
+              shape="rectangle"
+              margin="0px 0px 20px 0px"
+              src={preview ? preview : "http://via.placeholder.com/400x300"}
+            />
+          </Grid>
         </Grid>
-
-        <Image
-          shape="rectangle"
-          src={preview ? preview : "http://via.placeholder.com/400x300"}
-        />
-      </Grid>
-
-      <Grid padding="16px">
-        <Input
-          value={contents}
-          _onChange={changeContents}
-          label="게시글 내용"
-          placeholder="게시글 작성"
-          multiLine
-        />
-      </Grid>
-
-      <Grid padding="16px">
-        {is_edit ? (
-          <Button text="게시글 수정" _onClick={editPost}></Button>
-        ) : (
-          <Button text="게시글 작성" _onClick={addPost}></Button>
-        )}
+        <Grid>
+          <Input
+            _onChange={changeContents}
+            value={contents}
+            multiLine
+            label="게시글 내용"
+            placeholder=" 게시글 작성"
+          />
+        </Grid>
+        <Grid padding="16px 0px">
+          {is_edit ? (
+            <Button _onClick={editPost}>게시물 수정</Button>
+          ) : (
+            <Button _onClick={addPost}>게시물 작성</Button>
+          )}
+        </Grid>
       </Grid>
     </React.Fragment>
   );
